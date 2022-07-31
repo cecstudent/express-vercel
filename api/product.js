@@ -1,20 +1,19 @@
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 
 /**
  * GET product list.
  *
  * @return product list | empty.
  */
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    res.json({
-      status: 200,
-      message: "Get data has successfully",
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Server error");
+  var body = req.body;
+  const data = (await axios(body)).data;
+  res.json(data);
+  }catch(e) {
+  res.json({error: `${e}`});
   }
 });
 
